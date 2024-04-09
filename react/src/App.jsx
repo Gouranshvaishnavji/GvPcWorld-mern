@@ -1,48 +1,28 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'; // Import BrowserRouter
+import TopNav from './components/TopNav';
+import Card from './components/cards';
+import Footer from './components/footer';
+import About from './page/About';
+import Contact from './page/Contact';
+import Terms from './page/Terms';
 
 const App = () => {
   return (
+    <Router>
     <div className="home-page">
-      <header>
-        <h1>Welcome to GV PC World</h1>
-        <input type="text" placeholder="Search for products..." />
-        <button>Search</button>
-      </header>
-
-      <main>
-        <div className="productCategories">
-          <button>CPU</button>
-          <button>GPU</button>
-          <button>Motherboard</button>
-        </div>
-
-        <section className="featuredProducts">
-          <h2>Featured Products</h2>
-          <div className="product card">Product 1</div>
-          <div className="product card">Product 2</div>
-        </section>
-
-        <section className="special-offers">
-          <h2>Special Offers</h2>
-          <div className="offer card">deals 1</div>
-          <div className="offer card">deals 2</div>
-        </section>
-      </main>
-
-      <footer>
-        <nav className="footerNav">
-          <a href="/about">About Us</a>
-          <a href="/contact">Contact Us</a>
-          <a href="/terms">Terms of Service</a>
-          <a href="/privacy">Privacy Policy</a>
-        </nav>
-        <div className="social-media">
-          <a href="https://www.facebook.com/">Facebook</a>
-          <a href="https://twitter.com/">Twitter</a>
-          <a href="https://www.instagram.com/">Instagram</a>
-        </div>
-      </footer>
+      <TopNav />
+      <div>
+      <Routes>
+        <Route path="/" element={<Card />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
+      </Routes>
+      </div>
+      <Footer />
     </div>
+    </Router>
   );
 };
 
