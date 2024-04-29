@@ -6,6 +6,7 @@ import Footer from './components/footer';
 import About from './page/About';
 import Contact from './page/Contact';
 import Terms from './page/Terms';
+import CustommPC from './components/CustommPC';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/custompc" element={<CustommPC />} />
       </Routes>
       </div>
       <Footer />

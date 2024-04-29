@@ -8,7 +8,7 @@ export default function Footer() {
         <div id="navigation">
             <div className="nav-section">
                 <button><Link to="/about">About Us</Link></button>
-                <button><Link to="/contact">Contact Us</Link></button>
+                <button><Link to="/contact">Contact Us/ Feedback</Link></button>
                 <button><Link to="/terms">Terms of Service</Link></button>
             </div>
         </div>
