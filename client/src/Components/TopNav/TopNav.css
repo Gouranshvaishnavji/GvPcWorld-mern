@@ -1,0 +1,63 @@
+/* General styles for the top navigation bar */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+  text-decoration: none;
+}
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    height: 4vh;
+    width: 100vw;
+  }
+  
+  /* Style for the search input container */
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 30vw; 
+  }
+  
+  /* Style for the search input */
+  .search-input {
+    width: 20vw; 
+    height: 2.5vh; 
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    color: #fff; 
+  }
+  
+ 
+#text-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fdf8fd;
+  transition: all 0.3s ease-in-out;
+}
+
+#text-logo:hover {
+  color: #ebe2e2;
+  text-shadow: 0.2vh 0.1vw 0.6rem rgba(180, 159, 182, 0.2);
+  transform: scale(1.1);
+}
+  
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+    margin-right: 2vh;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+}
