@@ -5,10 +5,7 @@ const productRoutes =  require('./routes/productRoutes');
 const cors = require('cors');
 var bodyParser = require('body-parser')
 const app = express();
-// Load environment variables from .env file
 dotenv.config();
-console.log(process.env.MONGO_URI)
-// Connect to MongoDB
 connectDB();
 const allowedOrigins = [
     'http://localhost:4500', "http://localhost:5173",

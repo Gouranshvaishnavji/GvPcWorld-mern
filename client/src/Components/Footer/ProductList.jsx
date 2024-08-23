@@ -8,7 +8,7 @@ const ProductList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editProductId, setEditProductId] = useState(null);
-    // const [editProductData, setEditProductData] = useState({ name: '', category: '', price: '' });
+    const [editProductData, setEditProductData] = useState({ name: '', category: '', price: '' });
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -26,39 +26,39 @@ const ProductList = () => {
     }, []);
 
     const handleEditClick = (product) => {
-        // setEditProductId(product._id);
-        // setEditProductData({ name: product.name, category: product.category, price: product.price });
+        setEditProductId(product._id);
+        setEditProductData({ name: product.name, category: product.category, price: product.price });
     };
 
     const handleCancelClick = () => {
-        // setEditProductId(null);
-        // setEditProductData({ name: '', category: '', price: '' });
+        setEditProductId(null);
+        setEditProductData({ name: '', category: '', price: '' });
     };
 
     const handleInputChange = (e) => {
-        // const { name, value } = e.target;
-        // setEditProductData({ ...editProductData, [name]: value });
+        const { name, value } = e.target;
+        setEditProductData({ ...editProductData, [name]: value });
     };
 
     const handleSaveClick = async () => {
-        // try {
-        //     await axios.put(`http://localhost:5000/${editProductId}`, editProductData);
-        //     setProducts(products.map(product => 
-        //         product._id === editProductId ? { ...product, ...editProductData } : product
-        //     ));
-        //     setEditProductId(null);
-        // } catch (err) {
-        //     setError('Error updating product');
-        // }
+        try {
+            await axios.put(`http://localhost:5000/${editProductId}`, editProductData);
+            setProducts(products.map(product => 
+                product._id === editProductId ? { ...product, ...editProductData } : product
+            ));
+            setEditProductId(null);
+        } catch (err) {
+            setError('Error updating product');
+        }
     };
 
     const handleDelete = async (id) => {
-        // try {
-        //     await axios.delete(`http://localhost:5000/${id}`);
-        //     setProducts(products.filter(product => product._id !== id));
-        // } catch (err) {
-        //     setError('Error deleting product');
-        // }
+        try {
+            await axios.delete(`http://localhost:5000/${id}`);
+            setProducts(products.filter(product => product._id !== id));
+        } catch (err) {
+            setError('Error deleting product');
+        }
     };
 
     if (loading) return <p>Loading...</p>;
