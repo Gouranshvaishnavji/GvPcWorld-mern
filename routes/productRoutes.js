@@ -16,7 +16,7 @@ router.post('/add', async (req, res) => {
     const category = req.body.category;
     const price = req.body.price;
 
-    console.log(req.body)
+    // console.log(req.body)
 
     try {
         // Create a new product instance
