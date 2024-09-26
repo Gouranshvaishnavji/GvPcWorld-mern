@@ -24,3 +24,5 @@ Development Timeline
 - Day 10: Define data models for users, sellers, products, and orders, and implement CRUD operations for database interactions.
 - Day 11: Integrate frontend and backend components, and test API endpoints using tools like Postman.
 - Day 12: Conduct comprehensive testing, including unit tests, integration tests, and end-to-end tests, to identify and rectify any bugs or issues
+
+https://gvpcworld2.onrender.com/   deployed backend
