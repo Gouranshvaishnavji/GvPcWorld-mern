@@ -6,6 +6,7 @@ const AboutUs = () => {
   return (
     <>
     <TopNav />
+
     <Container>
       <Typography variant="h4" component="h1" gutterBottom>
         About Us
@@ -17,6 +18,7 @@ const AboutUs = () => {
     </>
 
   );
+  
 };
 
 export default AboutUs;
