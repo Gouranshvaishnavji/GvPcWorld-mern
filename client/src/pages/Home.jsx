@@ -2,7 +2,7 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Container, Typography } from "@mui/material";
-// import TopNav from "../Components/TopNav/TopNav";
+import TopNav from "../Components/TopNav/TopNav";
 import ProductCard from "../Components/ProductCard/ProductCard";
 // import Footer from "../Components/Footer/Footer";
 
@@ -19,7 +19,7 @@ const Home = () => {
         color: "#FFFFFF",
       }}
     >
-      {/* <TopNav /> */}
+      <TopNav />
       <Container sx={{ pt: 4 }}>
         <Box
           sx={{
@@ -47,7 +47,7 @@ const Home = () => {
           justifyContent="space-around"
           my={4}
         >
-          {[...Array(10)].map((_, index) => (
+          {[...Array(3)].map((_, index) => (
             <ProductCard
               key={index}
               image="https://i.gadgets360cdn.com/large/mvp_pc_build_1604313319165.jpg"

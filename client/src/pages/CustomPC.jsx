@@ -1,7 +1,18 @@
 import { useState } from "react";
-import { Box, Button, Container, Typography, Grid, MenuItem, Select } from "@mui/material";
+import { Box, Button, Container, Typography, Grid, MenuItem, Select, Stepper, Step, StepLabel } from "@mui/material";
+import TopNav from "../Components/TopNav/TopNav";
 
 const componentsList = {
+  BoxCase: {
+    "Standard Box": { price: 2000 },
+    "RGB Box": { price: 5000 },
+    "Full Tower Box": { price: 8000 },
+  },
+  Motherboard: {
+    "ASUS ROG Strix": { price: 30000 },
+    "MSI B450": { price: 15000 },
+    "Gigabyte Aorus": { price: 25000 },
+  },
   Processor: {
     "Intel i9": { price: 50000 },
     "AMD Ryzen 9": { price: 45000 },
@@ -9,6 +20,26 @@ const componentsList = {
   RAM: {
     "16GB DDR4": { price: 7000 },
     "32GB DDR4": { price: 12000 },
+  },
+  Monitor: {
+    "24-inch Monitor": { price: 20000 },
+    "27-inch Monitor": { price: 25000 },
+  },
+  GPU: {
+    "NVIDIA RTX 3080": { price: 80000 },
+    "AMD Radeon RX 6800": { price: 70000 },
+  },
+  Storage: {
+    "1TB SSD": { price: 10000 },
+    "2TB HDD": { price: 8000 },
+  },
+  PowerSupply: {
+    "750W PSU": { price: 10000 },
+    "850W PSU": { price: 12000 },
+  },
+  Cooling: {
+    "Air Cooler": { price: 5000 },
+    "Liquid Cooler": { price: 10000 },
   },
   Mouse: {
     "Logitech MX Master": { price: 10000 },
@@ -24,13 +55,10 @@ const CustomPC = () => {
   const [selectedComponents, setSelectedComponents] = useState({});
   const [currentComponentType, setCurrentComponentType] = useState("");
   const [currentComponent, setCurrentComponent] = useState("");
-  const [quantities, setQuantities] = useState({});
 
   const handleAddComponent = () => {
     if (currentComponentType && currentComponent) {
       const componentPrice = componentsList[currentComponentType][currentComponent].price;
-
-      // If the component is already in the selected list, increase the quantity
       setSelectedComponents((prev) => ({
         ...prev,
         [currentComponentType]: {
@@ -39,13 +67,6 @@ const CustomPC = () => {
           price: componentPrice,
         },
       }));
-
-      // Reset the quantity for the current component to 1
-      setQuantities((prev) => ({
-        ...prev,
-        [currentComponentType]: 1,
-      }));
-
       setCurrentComponentType("");
       setCurrentComponent("");
     } else {
@@ -53,91 +74,108 @@ const CustomPC = () => {
     }
   };
 
-  const handleQuantityChange = (componentType, operation) => {
-    setQuantities((prev) => {
-      const currentQty = prev[componentType] || 1;
-      const newQty = operation === "increase" ? currentQty + 1 : Math.max(currentQty - 1, 1); // Ensure it doesn't go below 1
-      return { ...prev, [componentType]: newQty };
-    });
-  };
+  // Check if all parts are selected
+  const isPCComplete = Object.keys(componentsList).every(
+    (type) => selectedComponents[type]
+  );
 
-  // Calculate the total price of all selected components
   const calculateTotalPrice = () => {
     return Object.values(selectedComponents).reduce((total, component) => {
-      return total + (component.price * (quantities[component.category] || 1))
+      return total + component.price;
     }, 0);
   };
+
+  const handleAddToCart = () => {
+    if (!isPCComplete) {
+      alert("Please select all components before adding to cart.");
+      return;
+    }
+    // Logic to add the PC to cart
+    console.log("PC added to cart:", selectedComponents);
+  };
+
   return (
-    <Box sx={{ minHeight: "100vh", background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)", color: "#FFFFFF" }}>
-      <Container sx={{ pt: 4 }}>
-        <Box sx={{ textAlign: "center", padding: "2rem", backgroundColor: "rgba(0, 0, 0, 0.7)", borderRadius: "10px", marginBottom: "2rem" }}>
-          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, color: "#00E5FF" }}>
-            Customize Your PC
-          </Typography>
-          <Typography variant="subtitle1" sx={{ color: "#E0E0E0" }}>
-            Select and add components to build your dream PC.
-          </Typography>
-        </Box>
+    <>
+      <TopNav />
+      <Box
+        sx={{
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+          color: "#FFFFFF",
+        }}
+      >
+        <Container sx={{ pt: 4 }}>
+          <Box
+            sx={{
+              textAlign: "center",
+              padding: "2rem",
+              marginBottom: "2rem",
+              background: "#2C2C3E",
+              borderRadius: "8px",
+            }}
+          >
+            <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, color: "#00E5FF" }}>
+              Customize Your PC
+            </Typography>
+            <Typography variant="subtitle1" sx={{ color: "#AAAAAA" }}>
+              Select all components to build and add your PC to the cart.
+            </Typography>
+          </Box>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.7)", borderRadius: "10px", padding: "2rem" }}>
-              <Typography variant="h5" sx={{ color: "#00E5FF", mb: 2 }}>
-                Current PC Status
-              </Typography>
-              <Box>
-                {Object.keys(selectedComponents).length === 0 ? (
-                  <Typography variant="body1" sx={{ color: "#E0E0E0" }}>
-                    No components added yet.
+          {/* Stepper for progress */}
+          <Stepper activeStep={Object.keys(selectedComponents).length} alternativeLabel>
+            {Object.keys(componentsList).map((type) => (
+              <Step key={type} completed={!!selectedComponents[type]}>
+                <StepLabel>{type}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <Grid container spacing={4}>
+            {/* Selected Components */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ background: "#2C2C3E", borderRadius: "8px", padding: "2rem" }}>
+                <Typography variant="h5" sx={{ color: "#00E5FF", mb: 2 }}>
+                  Selected Components
+                </Typography>
+                {Object.keys(componentsList).map((type) => (
+                  <Typography key={type} variant="body1" sx={{ color: "#FFFFFF", mb: 1 }}>
+                    {type}:{" "}
+                    {selectedComponents[type]
+                      ? `${selectedComponents[type].component} - ₹${selectedComponents[type].price}`
+                      : "Not Selected"}
                   </Typography>
-                ) : (
-                  Object.entries(selectedComponents).map(([key, value]) => (
-                    <Box key={key} sx={{ marginBottom: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <Typography variant="body1" sx={{ color: "#E0E0E0" }}>
-                        {key}: {value.component} - ₹{value.price} x {quantities[key] || 1}
-                      </Typography>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Button
-                          variant="contained"
-                          onClick={() => handleQuantityChange(key, "increase")}
-                          sx={{ background: "#00E5FF", color: "#fff", marginRight: "1rem", "&:hover": { background: "#00B8D4" } }}
-                        >
-                          +
-                        </Button>
-                        <Button
-                          variant="contained"
-                          onClick={() => handleQuantityChange(key, "decrease")}
-                          sx={{ background: "#00E5FF", color: "#fff", "&:hover": { background: "#00B8D4" } }}
-                        >
-                          -
-                        </Button>
-                      </Box>
-                    </Box>
-                  ))
-                )}
+                ))}
+                <Typography variant="h6" sx={{ mt: 2, color: "#FFFFFF" }}>
+                  Total Price: ₹{calculateTotalPrice()}
+                </Typography>
+                <Button
+                  variant="contained"
+                  disabled={!isPCComplete}
+                  onClick={handleAddToCart}
+                  sx={{
+                    mt: 2,
+                    background: isPCComplete ? "#00E5FF" : "#555555",
+                    "&:hover": { background: isPCComplete ? "#00B8D4" : "#555555" },
+                  }}
+                >
+                  Add to Cart
+                </Button>
               </Box>
-            </Box>
+            </Grid>
 
-            {/* Total Price Box */}
-            <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.7)", borderRadius: "10px", padding: "1rem", marginTop: "2rem" }}>
-              <Typography variant="h5" sx={{ color: "#00E5FF", mb: 2 }}>
-                Total: ₹{calculateTotalPrice()}
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.7)", borderRadius: "10px", padding: "2rem" }}>
-              <Typography variant="h5" sx={{ color: "#00E5FF", mb: 2 }}>
-                Add Component
-              </Typography>
-              <Box mb={2}>
+            {/* Add Component */}
+            <Grid item xs={12} md={6}>
+              <Box sx={{ background: "#2C2C3E", borderRadius: "8px", padding: "2rem" }}>
+                <Typography variant="h5" sx={{ color: "#00E5FF", mb: 2 }}>
+                  Add Component
+                </Typography>
                 <Select
                   fullWidth
                   value={currentComponentType}
                   onChange={(e) => setCurrentComponentType(e.target.value)}
                   displayEmpty
-                  sx={{ color: "#FFFFFF" }}
+                  sx={{ color: "#FFFFFF", mb: 2 }}
                 >
                   <MenuItem value="" disabled>
                     Select Component Type
@@ -148,15 +186,13 @@ const CustomPC = () => {
                     </MenuItem>
                   ))}
                 </Select>
-              </Box>
-              <Box mb={2}>
                 <Select
                   fullWidth
                   value={currentComponent}
                   onChange={(e) => setCurrentComponent(e.target.value)}
                   displayEmpty
                   disabled={!currentComponentType}
-                  sx={{ color: "#FFFFFF" }}
+                  sx={{ color: "#FFFFFF", mb: 2 }}
                 >
                   <MenuItem value="" disabled>
                     Select Component
@@ -168,28 +204,22 @@ const CustomPC = () => {
                       </MenuItem>
                     ))}
                 </Select>
+                <Button
+                  variant="contained"
+                  onClick={handleAddComponent}
+                  sx={{
+                    background: "#00E5FF",
+                    "&:hover": { background: "#00B8D4" },
+                  }}
+                >
+                  Add Component
+                </Button>
               </Box>
-              <Button
-                variant="contained"
-                onClick={handleAddComponent}
-                sx={{
-                  background: "linear-gradient(45deg, #ff4081, #ff80ab)",
-                  color: "#fff",
-                  fontWeight: "bold",
-                  padding: "0.8rem 2rem",
-                  fontSize: "1rem",
-                  "&:hover": {
-                    background: "linear-gradient(45deg, #f50057, #ff4081)",
-                  },
-                }}
-              >
-                Add Component
-              </Button>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 

@@ -1,0 +1,81 @@
+/* CartPage.css */
+.geometric-shape {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.1;
+  transition: all 0.5s ease;
+}
+
+.geometric-shape.red {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.geometric-shape.blue {
+  background: linear-gradient(135deg, #4ecdc4 0%, #6ee7e0 100%);
+  clip-path: circle(50% at 50% 50%);
+}
+
+.geometric-shape.yellow {
+  background: linear-gradient(135deg, #ffd93d 0%, #ffe566 100%);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* Card hover effects */
+.MuiCard-root {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-8px);
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Button animations */
+.MuiButton-contained {
+  position: relative;
+  overflow: hidden;
+}
+
+.MuiButton-contained::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.MuiButton-contained:hover::after {
+  transform: translateX(100%);
+}
+
+/* WhatsApp button styling */
+.whatsapp-button {
+  border-color: #25D366 !important;
+  color: #25D366 !important;
+}
+
+.whatsapp-button:hover {
+  border-color: #128C7E !important;
+  background-color: rgba(37, 211, 102, 0.1) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .MuiContainer-root {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .MuiGrid-container {
+    margin-top: 16px;
+  }
+  
+  .MuiTypography-h4 {
+    font-size: 1.75rem;
+  }
+} 
