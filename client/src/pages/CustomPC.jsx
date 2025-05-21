@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Box, Button, Container, Typography, Grid, MenuItem, Select, Stepper, Step, StepLabel } from "@mui/material";
-import TopNav from "../Components/TopNav/TopNav";
 
 const componentsList = {
   BoxCase: {
@@ -96,7 +95,7 @@ const CustomPC = () => {
 
   return (
     <>
-      <TopNav />
+      {/* <TopNav /> */}
       <Box
         sx={{
           minHeight: "100vh",
