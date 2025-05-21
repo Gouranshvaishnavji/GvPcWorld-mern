@@ -1,46 +1,81 @@
-import React from 'react';
-import { Button, Card, CardContent, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { 
+  Button, 
+  Card, 
+  CardContent, 
+  Typography, 
+  Box,
+  Alert,
+  CircularProgress
+} from '@mui/material';
 import { Google } from '@mui/icons-material';
-import TopNav from '../Components/TopNav/TopNav';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
-  const handleGoogleLogin = () => {
-    // Connect to the backend's Google OAuth endpoint
-    window.location.href = 'http://localhost:4000/auth/google';
+const Login = () => {
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    setError('');
+    
+    // Redirect to backend Google OAuth route
+    window.location.href = 'http://localhost:4500/auth/google';
   };
 
   return (
-    <> 
-    <TopNav />
-    
-    <div style={{
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      minHeight: '100vh', 
-      background: '#f4f4f4'
-    }}>
-      <Card style={{ width: 400, padding: '20px', textAlign: 'center' }}>
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            Login
+    <Box
+      sx={{
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '80vh', 
+        background: '#f4f4f4',
+        p: 2
+      }}
+    >
+      <Card sx={{ maxWidth: 400, width: '100%' }}>
+        <CardContent sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Welcome Back
           </Typography>
-          <Button 
-            variant="contained" 
-            color="primary" 
-            onClick={handleGoogleLogin} 
-            startIcon={<Google />}
-            style={{ textTransform: 'none' }}
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+            Sign in to continue to GvPcWorld
+          </Typography>
+          
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          <Button
+            variant="contained"
+            startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Google />}
+            onClick={handleGoogleSignIn}
+            fullWidth
+            size="large"
+            disabled={loading}
+            sx={{
+              mb: 2,
+              backgroundColor: '#4285f4',
+              '&:hover': {
+                backgroundColor: '#357abd'
+              }
+            }}
           >
-            Login with Google
+            {loading ? 'Signing in...' : 'Sign in with Google'}
           </Button>
+
+          <Typography variant="body2" color="text.secondary">
+            By signing in, you agree to our Terms of Service and Privacy Policy
+          </Typography>
         </CardContent>
       </Card>
-    </div>
-     </>
-    
+    </Box>
   );
 };
 
-export default LoginPage;
+export default Login;
 

@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, InputBase, Box, IconButton, Avatar, Menu, MenuItem, Badge } from '@mui/material';
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  InputBase, 
+  Box, 
+  IconButton, 
+  Avatar, 
+  Menu, 
+  MenuItem, 
+  Badge,
+  Button,
+  CircularProgress,
+  Tooltip
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import axios from 'axios';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 import './TopNav.css';
 
 const TopNav = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
-    const navigate = useNavigate();
-    const { toggleCart, getItemCount } = useCart();
+    const [userName, setUserName] = useState('');    const navigate = useNavigate();
+    const { cartCount } = useCart();
+    const { user, isAuthenticated, loading, logout } = useAuth();
+    const cartToggleRef = useRef(null);
 
     useEffect(() => {
-        const checkLoginStatus = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/login/success', {
-                    withCredentials: true
-                });
-                
-                if (response.data.success) {
-                    setIsLoggedIn(true);
-                    setUser(response.data.user);
-                } else {
-                    setIsLoggedIn(false);
-                }
-            } catch (err) {
-                console.error('Error checking login status:', err);
-                setIsLoggedIn(false);
-            }
-        };
-
-        checkLoginStatus();
-    }, []);
+        if (isAuthenticated && user) {
+            setUserName(user.name || 'User');
+        } else {
+            setUserName('');
+        }
+    }, [isAuthenticated, user]);
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -49,19 +49,17 @@ const TopNav = () => {
     };
 
     const handleLogout = async () => {
-        try {
-            await axios.post('http://localhost:4000/logout', {}, {
-                withCredentials: true
-            });
-            setIsLoggedIn(false);
-            setUser(null);
-            handleMenuClose();
-            navigate('/');
-        } catch (err) {
-            console.error('Error logging out:', err);
+        await logout();
+        handleMenuClose();
+        navigate('/');
+    };    const handleCartClick = (e) => {
+        e.preventDefault();
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
         }
+        navigate('/cart');
     };
-
     return (
         <AppBar position="static" className="top-nav">
             <Toolbar className="nav-toolbar">
@@ -81,37 +79,60 @@ const TopNav = () => {
                     <IconButton component={Link} to="/about-us" className="nav-item">
                         <InfoIcon />
                     </IconButton>
-                    
-                    {isLoggedIn ? (
+                    <Tooltip title={isAuthenticated ? "View Cart" : "Login to view cart"}>
+                        <IconButton 
+                            onClick={handleCartClick} 
+                            className="nav-item"
+                            color={isAuthenticated ? "primary" : "default"}
+                        >                            <Badge 
+                                badgeContent={isAuthenticated ? cartCount : 0} 
+                                color="primary"
+                            >
+                                <ShoppingCartIcon />
+                            </Badge>
+                        </IconButton>
+                    </Tooltip>                    {isAuthenticated ? (
                         <>
-                            <IconButton onClick={toggleCart} className="nav-item">
-                                <Badge badgeContent={getItemCount()} color="primary">
-                                    <ShoppingCartIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton 
-                                component={Link} 
-                                to="/cart-page" 
-                                className="nav-item"
-                                sx={{ ml: 1 }}
-                            >
-                                <LocalShippingIcon />
-                            </IconButton>
-                            <IconButton 
-                                onClick={handleMenuOpen} 
-                                className="nav-item"
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar 
-                                    src={user?.ownerImg && user.ownerImg[0]} 
-                                    alt={user?.name}
-                                    sx={{ width: 32, height: 32 }}
-                                />
-                            </IconButton>
+                            {/* User Name and Avatar */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+                                <Typography 
+                                    variant="subtitle1" 
+                                    sx={{ 
+                                        mr: 1, 
+                                        fontWeight: 'medium',
+                                        color: 'white'
+                                    }}
+                                >
+                                    {userName}
+                                </Typography>
+                                <IconButton 
+                                    onClick={handleMenuOpen} 
+                                    className="nav-item"
+                                    sx={{ p: 0 }}
+                                >
+                                    <Avatar 
+                                        src={user?.ownerImg?.[0]} 
+                                        alt={userName}
+                                        sx={{ width: 32, height: 32 }}
+                                    >
+                                        {userName.charAt(0).toUpperCase()}
+                                    </Avatar>
+                                </IconButton>
+                            </Box>
+
+                            {/* User Menu */}
                             <Menu
                                 anchorEl={anchorEl}
                                 open={Boolean(anchorEl)}
                                 onClose={handleMenuClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
                             >
                                 <MenuItem 
                                     component={Link} 
@@ -127,9 +148,22 @@ const TopNav = () => {
                             </Menu>
                         </>
                     ) : (
-                        <IconButton component={Link} to="/login" className="nav-item">
-                            <PersonIcon />
-                        </IconButton>
+                        <Button 
+                            component={Link} 
+                            to="/login" 
+                            variant="contained" 
+                            color="primary"
+                            startIcon={<PersonIcon />}
+                            sx={{ 
+                                ml: 2,
+                                textTransform: 'none',
+                                '&:hover': {
+                                    backgroundColor: 'primary.dark',
+                                }
+                            }}
+                        >
+                            Login
+                        </Button>
                     )}
                 </Box>
             </Toolbar>
