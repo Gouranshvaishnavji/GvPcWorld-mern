@@ -38,7 +38,7 @@ router.get('/google/callback', (req, res, next) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        sameSite: 'lax',
         maxAge: 3600000 // 1 hour in milliseconds
       });
       

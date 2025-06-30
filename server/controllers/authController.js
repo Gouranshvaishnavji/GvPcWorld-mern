@@ -11,11 +11,10 @@ const loginUser = async (req, res) => {
     expiresIn: '7d',
   });
 
-  // Set HttpOnly cookie
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Strict',
+    secure: process.env.NODE_ENV == 'production',
+    sameSite: 'None',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 
