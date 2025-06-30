@@ -38,7 +38,7 @@ router.get('/google/callback', (req, res, next) => {
       res.cookie('jwt', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        sameSite: 'None',
         maxAge: 3600000 // 1 hour in milliseconds
       });
       
@@ -56,7 +56,7 @@ router.post('/logout', (req, res) => {
     res.clearCookie('jwt', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'None',
     });
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
