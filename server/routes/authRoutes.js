@@ -4,7 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { authenticateToken } = require('../middleware/authMiddleware');
-const User = require('../models/user.js');
+const User = require('../models/User.js');
 
 // Google OAuth routes with debug logging
 router.get('/google', (req, res, next) => {
