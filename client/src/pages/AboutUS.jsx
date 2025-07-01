@@ -5,7 +5,7 @@ import TopNav from '../Components/TopNav/TopNav';
 const AboutUs = () => {
   return (
     <>
-    <TopNav />
+    {/* <TopNav /> */}
 
     <Container>
       <Typography variant="h4" component="h1" gutterBottom>

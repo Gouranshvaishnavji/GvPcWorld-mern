@@ -65,7 +65,6 @@ router.post('/logout', (req, res) => {
   }
 });
 
-// Check authentication status
 router.get('/success', authenticateToken, async (req, res) => {
   console.log('Handling /success route, user:', req.user);
   try {

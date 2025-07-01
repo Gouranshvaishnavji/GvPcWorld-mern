@@ -18,9 +18,10 @@ const ProductList = lazy(() => import('./pages/ProductList'));
 // const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Profile = lazy(() => import('./pages/Profile'));
 const PreBuiltPCs = lazy(() => import('./pages/PreBuiltPCs'));
-
+const AboutUs = lazy(() => import('./pages/AboutUS'));
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
+  
   
   if (loading) {
     return <LoadingScreen />;
@@ -59,8 +60,7 @@ function App() {
                 {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
                 <Route path="/pre-built" element={<PreBuiltPCs />} />
                 {/* <Route path="/checkout" element={<Checkout />} /> */}
-                
-                {/* Protected Routes */}
+                <Route path='/about-us' element={<AboutUs />} />
                 <Route 
                   path="/profile" 
                   element={
