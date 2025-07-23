@@ -7,14 +7,18 @@ import { toast } from 'react-toastify';
 import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material';
 import API from '../../Api/api';
 import {useAuth} from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 const CustomPC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [selectedComponents, setSelectedComponents] = useState({});
   const [currentComponentType, setCurrentComponentType] = useState("");
   const [currentComponent, setCurrentComponent] = useState("");
   const [customPCs, setCustomPCs] = useState([]);
   const [currentBuildName, setCurrentBuildName] = useState("My Custom PC");
+  const [budget, setBudget] = useState(200000); 
+  const [purpose, setPurpose] = useState("Gaming");
 
   useEffect(() => {
     setCustomPCs(preBuiltConfigs);
@@ -107,6 +111,22 @@ const CustomPC = () => {
     setCurrentBuildName("My Custom PC");
     toast.info("Build reset");
   };
+    const handleAIReviewNavigate = () => {
+    if (!isPCComplete) {
+      toast.warning("Please complete your build before getting AI Review.");
+      return;
+    }
+
+    navigate('/review-my-build', {
+      state: {
+        selectedComponents,
+        buildName: currentBuildName,
+        budget,
+        purpose,
+      },
+    });
+  };
+
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -119,7 +139,30 @@ const CustomPC = () => {
             label="Build Name"
           />
         </Box>
+        <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+          <TextField
+            label="Your Budget (INR)"
+            type="number"
+            value={budget}
+            onChange={(e) => setBudget(Number(e.target.value))}
+            fullWidth
+          />
 
+          <TextField
+            label="PC Purpose"
+            select
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
+            SelectProps={{ native: true }}
+            fullWidth
+          >
+            <option value="Gaming">Gaming</option>
+            <option value="AI/ML">AI / Machine Learning</option>
+            <option value="Animation">Animation & VFX</option>
+            <option value="Office Work">Office Work</option>
+          </TextField>
+
+        </Box>
         <ProgressBar components={selectedComponents} />
 
         <ComponentSelector
@@ -150,6 +193,16 @@ const CustomPC = () => {
           >
             Add to Cart
           </Button>
+          <Button
+            variant="outlined"
+            color="info"
+            onClick={handleAIReviewNavigate}
+            disabled={!isPCComplete}
+          >
+
+            Get AI Review
+          </Button>
+
           <Button variant="outlined" color="error" onClick={handleReset}>
             Reset
           </Button>
