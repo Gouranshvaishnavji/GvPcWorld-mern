@@ -111,7 +111,7 @@ const CustomPC = () => {
     setCurrentBuildName("My Custom PC");
     toast.info("Build reset");
   };
-    const handleAIReviewNavigate = () => {
+  const handleAIReviewNavigate = () => {
     if (!isPCComplete) {
       toast.warning("Please complete your build before getting AI Review.");
       return;

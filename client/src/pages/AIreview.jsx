@@ -16,7 +16,7 @@ const AIReview = () => {
   const [loading, setLoading] = useState(true);
 
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  const apiUrl = import.meta.env.VITE_GEMINI_API_URL;
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`
 
   useEffect(() => {
     const fetchReview = async () => {
@@ -43,6 +43,7 @@ Keep the tone simple and user-friendly.
       `.trim();
 
       try {
+        console.log('Fetching AI review with prompt')
         const res = await fetch(`${apiUrl}?key=${apiKey}`, {
           method: 'POST',
           headers: {
@@ -52,7 +53,7 @@ Keep the tone simple and user-friendly.
             contents: [{ parts: [{ text: prompt }] }],
           }),
         });
-
+        console.log('Response received from review api');
         const data = await res.json();
         const output = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
         setReview(output);
