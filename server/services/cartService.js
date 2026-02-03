@@ -1,5 +1,5 @@
-import AppError from '../utils/AppError.js';
-import { logger } from '../utils/logger.js';
+import AppError from '../util/AppError.js';
+import { logger } from '../util/logger.js';
 
 /**
  * @param {CartRepository} cartRepository

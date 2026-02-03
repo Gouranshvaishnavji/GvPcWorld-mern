@@ -15,7 +15,8 @@ export const logger = winston.createLogger({
         colorize(),
         printf(({ level, message, timestamp }) => {
             const requestId = context.getStore()?.get('requestId') || 'System';
-          return `${timestamp} [${level}]: ${message} [Request ID: ${requestId}]`;
+        const userId = context.getStore()?.get('userId') || 'Anonymous';
+          return `${timestamp} [${level}]: ${message} [Request ID: ${requestId}] [User ID: ${userId}]`;
         })
       )
     }),
