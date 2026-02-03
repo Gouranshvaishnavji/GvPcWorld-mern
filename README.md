@@ -11,7 +11,7 @@
 - **Shopping Cart**: Add and manage items in your cart
 - **Responsive Design**: Access the platform from any device
 
-## 🛠 Technology Stack
+## -Technology Stack
 
 ### Frontend
 - **React.js**: For building dynamic and responsive user interfaces
@@ -27,7 +27,7 @@
 - **Passport.js**: Authentication middleware
 - **JWT**: For secure authentication
 
-## 🏗 Project Structure
+##- Project Structure
 
 ```
 GVPCWorld-mern/
