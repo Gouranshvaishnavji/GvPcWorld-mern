@@ -3,7 +3,7 @@ const cartItemSchema = new mongoose.Schema({
   productId: { // we can reference to box user has choosen in cart
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
-    required: true,
+    // required: true,
   },
   quantity: {
     type: Number,

@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import passport from 'passport';
 import dotenv from 'dotenv';  
 import connectDB from './config/db.js';
 import User from './models/User.js';
-import {} from './models/Cart.js';
+import {Cart, Item} from './models/Cart.js';
+import authroutes from './routes/auth.js';
+import requestContext from './middleware/requestContext.js';
+// we are going on a new journey and this is important to do.
+
+// import session from 'express-session';
+// import passport from 'passport';
 // import router from './routes/authRoutes.js';
 // import cartRoutes from './routes/cartRoutes.js';
 // import productRoutes from './routes/productRoutes.js';
@@ -14,16 +18,25 @@ console.log(typeof express);
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(requestContext); 
 connectDB();
+app.use('/auth', authroutes);
 app.post('/test', async (req, res) => {
   try {
-    const {productid, quantity, price, isCustomBuild, selectedComponents} = req.body;
-    const user = await User.create({ productid, quantity, price, isCustomBuild, selectedComponents });
-    res.status(201).json({ message: 'product added succefully created successfully', user });
+   const { productId, quantity, price, isCustomBuild, selectedComponents } = req.body;
+
+  const item = await Item.create({
+    productId,
+    quantity,
+    price,
+    isCustomBuild,
+    selectedComponents
+  });
+    res.status(201).json({ message: 'product added succefully created successfully', item });
   }
 
   catch (error) {
-    console.error('Error creating user:', error);
+    console.error('Error creating item:', error);
     res.status(500).json({ message: 'Internal server error' });
   } 
 });
