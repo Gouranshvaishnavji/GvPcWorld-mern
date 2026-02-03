@@ -22,22 +22,23 @@
 
 export default function makeAuthController(authService) {
   return {
-    register: async (req, res) => {
+    register: async (req, res, next) => {
       try {
         const { name, email, password } = req.body;
         const result = await authService.register(name, email, password);
         res.status(201).json(result);
       } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error); // Pass to global error handler
       }
     },
-    login: async (req, res) => {
+
+    login: async (req, res, next) => {
       try {
         const { email, password } = req.body;
         const result = await authService.login(email, password);
         res.status(200).json(result);
       } catch (error) {
-        res.status(401).json({ error: error.message });
+        next(error); // Pass to global error handler
       }
     }
   };
