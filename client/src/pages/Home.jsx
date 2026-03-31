@@ -77,7 +77,6 @@ const Home = () => {
     }
   ], []);
 
-  // Optimize animations with useCallback
   const initializeAnimations = React.useCallback(() => {
     let animations = [];
 
