@@ -8,7 +8,6 @@ import TopNav from './Components/TopNav/TopNav';
 import Footer from './Components/Footer/Footer';
 import LoadingScreen from './Components/LoadingScreen/LoadingScreen';
 import NotFound from './pages/NotFound';
-import AIReview from './pages/AIReview';
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
@@ -53,7 +52,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/custom-pc" element={<CustomPC />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/review-my-build" element={<AIReview />} />
                 <Route path="/products" element={<ProductList />} />
                 <Route path="/pre-built" element={<PreBuiltPCs />} />
                 <Route path='/about-us' element={<AboutUs />} />
