@@ -23,7 +23,6 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const heroRef = useRef(null);
   const categoriesRef = useRef(null);
-  const testimonialsRef = useRef(null);
 
   const handleStartBuilding = React.useCallback(() => {
     navigate('/custom-pc');
@@ -78,33 +77,10 @@ const Home = () => {
     }
   ], []);
 
-  // Memoize testimonials data
-    {
-      id: 1,
-      name: 'Alex Johnson',
-      role: 'Gaming Enthusiast',
-      image: '/images/testimonials/user1.jpg',
-      text: 'Built my dream gaming PC with GvPcWorld. The process was smooth and the result is amazing!'
-    },
-    {
-      id: 2,
-      name: 'Sarah Chen',
-      role: 'Content Creator',
-      image: '/images/testimonials/user2.jpg',
-      text: 'The custom PC builder helped me choose the perfect components for video editing. Highly recommended!'
-    },
-    {
-      id: 3,
-      name: 'Michael Rodriguez',
-      role: 'Software Developer',
-      image: '/images/testimonials/user3.jpg',
-      text: 'Fast shipping and excellent customer service. My development workstation is running perfectly!'
-    }
-  ], []);
-
   // Optimize animations with useCallback
   const initializeAnimations = React.useCallback(() => {
-  
+    let animations = [];
+
     const animateHeroElements = () => {
       const hero = heroRef.current;
       if (!hero) return;
@@ -161,36 +137,8 @@ const Home = () => {
       }
     };
 
-    const animateTestimonials = () => {
-      const testimonials = testimonialsRef.current;
-      if (!testimonials) return;
-
-      const testimonialCards = testimonials.querySelectorAll('.testimonial-card');
-      if (testimonialCards.length) {
-        animations.push(
-          gsap.fromTo(
-            testimonialCards,
-            { y: 30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.6,
-              stagger: 0.15,
-              scrollTrigger: {
-                trigger: testimonials,
-                start: 'top center+=100',
-                toggleActions: 'play none none none'
-              }
-            }
-          )
-        );
-      }
-    };
-
-    // Execute animations in order
     animateHeroElements();
     animateCategories();
-    animateTestimonials();
 
     return () => {
       animations.forEach(anim => {
@@ -273,73 +221,6 @@ const Home = () => {
   ), (prevProps, nextProps) => {
     return (
       prevProps.category === nextProps.category &&
-      prevProps.index === nextProps.index
-    );
-  });
-
-  // Memoize TestimonialCard component
-  const TestimonialCard = React.memo(({ testimonial, index }) => (
-    <Fade in timeout={600} style={{ transitionDelay: `${index * 200}ms` }}>
-      <Card className="testimonial-card" sx={{ 
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        p: 3,
-        borderRadius: 4,
-        background: 'rgba(255,255,255,0.05)',
-        backdropFilter: 'blur(10px)',
-        transition: 'all 0.3s ease',
-        '&:hover': {
-          transform: 'translateY(-5px)',
-          boxShadow: '0 12px 30px 0 rgba(0,0,0,0.2)'
-        }
-      }}
-      >
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          mb: 3,
-          pb: 2,
-          borderBottom: '1px solid rgba(255,255,255,0.1)'
-        }}>
-          <Box
-            component="img"
-            src={testimonial.image}
-            alt={testimonial.name}
-            sx={{ 
-              width: 64,
-              height: 64,
-              borderRadius: '50%',
-              mr: 2,
-              objectFit: 'cover',
-              border: '3px solid rgba(255,255,255,0.2)'
-            }}
-          />
-          <Box>
-            <Typography variant="h6" sx={{ color: 'white', fontWeight: 600 }}>
-              {testimonial.name}
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-              {testimonial.role}
-            </Typography>
-          </Box>
-        </Box>
-        <Typography 
-          variant="body1" 
-          sx={{ 
-            flexGrow: 1,
-            color: 'rgba(255,255,255,0.9)',
-            fontStyle: 'italic',
-            lineHeight: 1.6
-          }}
-        >
-          "{testimonial.text}"
-        </Typography>
-      </Card>
-    </Fade>
-  ), (prevProps, nextProps) => {
-    return (
-      prevProps.testimonial === nextProps.testimonial &&
       prevProps.index === nextProps.index
     );
   });
@@ -489,26 +370,6 @@ const Home = () => {
         sx={{ 
           py: 8, 
           background: 'linear-gradient(135deg, rgba(25,118,210,0.1) 0%, rgba(13,71,161,0.2) 100%)'
-        }}
-      >
-
-      </Box>
-      <Box 
-        ref={testimonialsRef}
-        className="testimonials-section"
-        sx={{ 
-          py: 8,
-          position: 'relative',
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'radial-gradient(circle at 50% 50%, rgba(25,118,210,0.1) 0%, rgba(13,71,161,0.2) 100%)',
-            zIndex: 0
-          }
         }}
       >
 

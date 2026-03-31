@@ -74,7 +74,6 @@ const ProductList = () => {
   if (sortBy === 'price') filteredProducts.sort((a, b) => a.price - b.price);
   if (sortBy === '-price') filteredProducts.sort((a, b) => b.price - a.price);
 
-  // Pagination
   const paginatedProducts = filteredProducts.slice(
     page * productsPerPage
   );
