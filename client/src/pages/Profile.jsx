@@ -35,13 +35,11 @@ const Profile = () => {
           setUser(response.data.user);
         } else {
           setError('User not found');
-          // Redirect to login if not authenticated
           setTimeout(() => navigate('/login'), 2000);
         }
       } catch (err) {
         console.error('Error fetching user profile:', err);
         setError('Failed to load profile. Please try again.');
-        // Redirect to login if not authenticated
         setTimeout(() => navigate('/login'), 2000);
       } finally {
         setLoading(false);
@@ -53,15 +51,12 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      // Call logout endpoint
       await axios.post(`${API_URL}/auth/logout`, {}, {
         withCredentials: true
       });
       
-      // Clear any local storage or state
       localStorage.removeItem('user');
       
-      // Redirect to home page
       navigate('/');
     } catch (err) {
       console.error('Error logging out:', err);

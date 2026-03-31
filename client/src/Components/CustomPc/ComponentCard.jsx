@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Box, Typography, IconButton, Fade } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const ComponentCard = ({ type, component, onRemove }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <Fade in timeout={400}>
       <Paper
@@ -33,6 +35,8 @@ const ComponentCard = ({ type, component, onRemove }) => {
                 component="img"
                 src={component.image}
                 alt={component.component}
+                loading="lazy"
+                onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   e.target.src = '/processor.png';
                 }}

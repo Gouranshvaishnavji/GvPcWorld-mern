@@ -212,7 +212,22 @@ const CustomPC = () => {
           <Typography variant="h5" fontWeight={600} mb={2}>Pre-Built PCs</Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
             {customPCs.map((prebuilt) => (
-              <Paper key={prebuilt.name} elevation={3} sx={{ p: 2, minWidth: 300, flex: 1 }}>
+              <Paper key={prebuilt.name} elevation={3} sx={{ p: 2, minWidth: 300, flex: 1, overflow: 'hidden' }}>
+                {prebuilt.image && (
+                  <Box
+                    component="img"
+                    src={prebuilt.image}
+                    alt={prebuilt.name}
+                    loading="lazy"
+                    sx={{ 
+                      width: '100%', 
+                      height: 200, 
+                      objectFit: 'cover', 
+                      borderRadius: 1,
+                      mb: 2
+                    }}
+                  />
+                )}
                 <Typography variant="h6" fontWeight={500}>{prebuilt.name}</Typography>
                 <Typography variant="subtitle1" color="primary" fontWeight={700}>
                   ₹{prebuilt.totalPrice?.toLocaleString()}

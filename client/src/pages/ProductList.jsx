@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 import { componentsList } from '../utils/componentsList';
 
 const flattenProducts = () => {
-  // Flatten all components into a single array of products
   const products = [];
   Object.entries(componentsList).forEach(([category, comps]) => {
     Object.entries(comps).forEach(([name, { price, image }]) => {
@@ -48,16 +47,13 @@ const ProductList = () => {
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
 
-  // Get all products from componentsList
   const allProducts = flattenProducts();
 
   // Categories for filter
-  const categories = [
     { value: 'all', label: 'All Categories' },
     ...Object.keys(componentsList).map((cat) => ({ value: cat, label: cat })),
   ];
 
-  // Sort options
   const sortOptions = [
     { value: 'name', label: 'Name (A-Z)' },
     { value: '-name', label: 'Name (Z-A)' },
@@ -66,7 +62,6 @@ const ProductList = () => {
   ];
 
   // Filter and sort products
-  let filteredProducts = allProducts.filter(
     (product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (category === 'all' || product.category === category)
@@ -81,7 +76,6 @@ const ProductList = () => {
 
   // Pagination
   const paginatedProducts = filteredProducts.slice(
-    (page - 1) * productsPerPage,
     page * productsPerPage
   );
 

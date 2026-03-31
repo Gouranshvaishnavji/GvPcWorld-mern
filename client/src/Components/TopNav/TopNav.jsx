@@ -12,7 +12,6 @@ const navItems = [
 ];
 
 const TopNav = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();

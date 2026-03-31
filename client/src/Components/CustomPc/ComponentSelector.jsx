@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button, Grid, Paper } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { componentsList } from '../../utils/componentsList';
@@ -11,6 +11,12 @@ const ComponentSelector = ({
   handleAddComponent,
   selectedComponents
 }) => {
+  const [loadedImages, setLoadedImages] = useState({});
+
+  const handleImageLoad = (key) => {
+    setLoadedImages(prev => ({ ...prev, [key]: true }));
+  };
+
   return (
     <Paper elevation={2} className="component-selector" style={{
       padding: '1.5rem',
@@ -70,7 +76,13 @@ const ComponentSelector = ({
                   boxShadow: selectedComponents[currentComponentType]?.component === component ? '0 2px 8px #1976d222' : 'none',
                   opacity: selectedComponents[currentComponentType] ? 0.5 : 1
                 }}>
-                  <img src={image} alt={component} style={{ width: 48, height: 48, objectFit: 'contain', marginBottom: 8 }} />
+                  <img 
+                    src={image} 
+                    alt={component} 
+                    loading="lazy"
+                    onLoad={() => handleImageLoad(component)}
+                    style={{ width: 48, height: 48, objectFit: 'contain', marginBottom: 8 }} 
+                  />
                   <Typography variant="body1" fontWeight={600} align="center" style={{ color: '#222' }}>{component}</Typography>
                   <Typography variant="body2" color="text.secondary" align="center" mb={1}>
                     ₹{price.toLocaleString()}

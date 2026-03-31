@@ -1,4 +1,3 @@
-// Home.js
 import React, { useEffect, useRef, memo, lazy, Suspense } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, Container, Typography, Grid, Card, CardContent, CardMedia, useTheme, useMediaQuery, Fade, Slide } from "@mui/material";
@@ -26,7 +25,6 @@ const Home = () => {
   const categoriesRef = useRef(null);
   const testimonialsRef = useRef(null);
 
-  // Memoize navigation handlers
   const handleStartBuilding = React.useCallback(() => {
     navigate('/custom-pc');
   }, [navigate]);
@@ -35,7 +33,6 @@ const Home = () => {
     navigate('/products');
   }, [navigate]);
 
-  // Memoize categories data
   const categories = React.useMemo(() => [
     {
       id: 1,
@@ -82,7 +79,6 @@ const Home = () => {
   ], []);
 
   // Memoize testimonials data
-  const testimonials = React.useMemo(() => [
     {
       id: 1,
       name: 'Alex Johnson',
@@ -108,8 +104,7 @@ const Home = () => {
 
   // Optimize animations with useCallback
   const initializeAnimations = React.useCallback(() => {
-    let animations = [];
-
+  
     const animateHeroElements = () => {
       const hero = heroRef.current;
       if (!hero) return;
@@ -207,7 +202,6 @@ const Home = () => {
     };
   }, []);
 
-  // Run animations only once on mount
   useEffect(() => {
     const cleanup = initializeAnimations();
     return () => {
@@ -215,7 +209,6 @@ const Home = () => {
     };
   }, [initializeAnimations]);
 
-  // Memoize CategoryCard component
   const CategoryCard = React.memo(({ category, index, onNavigate }) => (
     <Fade in timeout={600} style={{ transitionDelay: `${index * 100}ms` }}>
       <Card 
@@ -521,7 +514,6 @@ const Home = () => {
 
       </Box>
 
-      {/* CTA Section - Modern and Engaging */}
       <Box 
         className="cta-section"
         sx={{ 

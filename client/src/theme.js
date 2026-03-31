@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 
-// Modern art-inspired theme with De Stijl influence
 const theme = createTheme({
   palette: {
     primary: {
@@ -16,7 +15,7 @@ const theme = createTheme({
       contrastText: '#fff',
     },
     tertiary: {
-      main: '#FFFF00', // Bold yellow
+      main: '#FFFF00',
       light: '#FFFF4D',
       dark: '#CCCC00',
       contrastText: '#000000',
@@ -122,7 +121,7 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 0, // Sharp corners for geometric look
+          borderRadius: 0,
         },
       },
     },

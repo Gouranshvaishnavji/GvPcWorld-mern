@@ -1,5 +1,3 @@
-// src/pages/AboutUs.jsx
-
 import React from 'react';
 import { Container, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
 

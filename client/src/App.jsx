@@ -15,14 +15,11 @@ const Login = lazy(() => import('./pages/Login'));
 const CustomPC = lazy(() => import('./Components/CustomPc/CustomPC'));
 const Cart = lazy(() => import('./Components/Cart/Cart'));
 const ProductList = lazy(() => import('./pages/ProductList'));
-// const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Profile = lazy(() => import('./pages/Profile'));
 const PreBuiltPCs = lazy(() => import('./pages/PreBuiltPCs'));
 const AboutUs = lazy(() => import('./pages/AboutUS'));
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
-  
-  
   if (loading) {
     return <LoadingScreen />;
   }
@@ -58,9 +55,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/review-my-build" element={<AIReview />} />
                 <Route path="/products" element={<ProductList />} />
-                {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
                 <Route path="/pre-built" element={<PreBuiltPCs />} />
-                {/* <Route path="/checkout" element={<Checkout />} /> */}
                 <Route path='/about-us' element={<AboutUs />} />
                 <Route 
                   path="/profile" 
