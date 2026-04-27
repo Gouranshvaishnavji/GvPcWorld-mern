@@ -1,6 +1,6 @@
 # GVPCWorld Platform
 
-GVPCWorld is a web-based platform designed to connect graduates with potential employers in the tech industry. The application provides a seamless user experience through modern web technologies and intuitive design.
+
 
 ##  Features
 
@@ -11,7 +11,7 @@ GVPCWorld is a web-based platform designed to connect graduates with potential e
 - **Shopping Cart**: Add and manage items in your cart
 - **Responsive Design**: Access the platform from any device
 
-## 🛠 Technology Stack
+## -Technology Stack
 
 ### Frontend
 - **React.js**: For building dynamic and responsive user interfaces
@@ -27,7 +27,7 @@ GVPCWorld is a web-based platform designed to connect graduates with potential e
 - **Passport.js**: Authentication middleware
 - **JWT**: For secure authentication
 
-## 🏗 Project Structure
+##- Project Structure
 
 ```
 GVPCWorld-mern/
