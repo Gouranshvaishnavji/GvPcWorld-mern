@@ -35,7 +35,6 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Form states
   const [shippingData, setShippingData] = useState({
     firstName: '',
     lastName: '',
@@ -82,7 +81,6 @@ const Checkout = () => {
     setError(null);
 
     try {
-      // TODO: Replace with actual API call
       const orderData = {
         user: user._id,
         items: cart,

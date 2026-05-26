@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import {
 const ProductCard = ({ image, title, description, price }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <Card
@@ -32,8 +33,10 @@ const ProductCard = ({ image, title, description, price }) => {
       <CardMedia
         component="img"
         height="200"
-        image={image || 'https://i.gadgets360cdn.com/large/mvp_pc_build_1604313319165.jpg'}
+        image={image || '/processor.png'}
         alt={title || 'PC Build'}
+        loading="lazy"
+        onLoad={() => setImageLoaded(true)}
         sx={{
           objectFit: 'cover',
           transition: 'transform 0.3s ease-in-out',
@@ -75,7 +78,7 @@ const ProductCard = ({ image, title, description, price }) => {
                 color: theme.palette.secondary.main,
               }}
             >
-              ${price}
+              ₹{price.toLocaleString()}
             </Typography>
           </Box>
         )}

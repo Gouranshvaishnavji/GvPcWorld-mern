@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Animation utility functions with performance optimizations
 export const createHeroAnimation = (elements) => {
   if (!elements || elements.length === 0) return null;
 
@@ -52,7 +51,6 @@ export const createScrollAnimation = (elements, trigger, options = {}) => {
   );
 };
 
-// Helper function to clean up animations
 export const cleanupAnimations = (animations = [], triggers = true) => {
   animations.forEach(anim => {
     if (anim && anim.kill) anim.kill();

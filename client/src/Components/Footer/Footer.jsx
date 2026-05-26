@@ -46,7 +46,6 @@ const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Memoize static data
   const socialLinks = React.useMemo(() => [
     { icon: <Facebook />, url: '#', label: 'Facebook' },
     { icon: <Twitter />, url: '#', label: 'Twitter' },
@@ -61,7 +60,6 @@ const Footer = () => {
     { text: 'Components', path: '/products/components' }
   ], []);
 
-  // Memoize contact info section
   const ContactInfo = React.useMemo(() => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -98,7 +96,6 @@ const Footer = () => {
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          {/* Company Info */}
           <Grid item xs={12} md={4}>
             <FooterSection title="GvPcWorld">
               <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -154,7 +151,6 @@ const Footer = () => {
             </FooterSection>
           </Grid>
 
-          {/* Contact Info */}
           <Grid item xs={12} md={4}>
             <FooterSection title="Contact Us">
               {ContactInfo}
