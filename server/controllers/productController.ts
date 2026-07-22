@@ -1,6 +1,8 @@
-export default function makeProductController(productService) {
+import type { NextFunction, Request, Response } from 'express';
+
+export default function makeProductController(productService: any) {
   return {
-    create: async (req, res, next) => {
+    create: async (req: Request, res: Response, next: NextFunction) => {
       try {
         const product = await productService.createProduct(req.body);
         res.status(201).json(product);
@@ -9,7 +11,7 @@ export default function makeProductController(productService) {
       }
     },
 
-    getAll: async (req, res, next) => {
+    getAll: async (req: Request, res: Response, next: NextFunction) => {
       try {
         const products = await productService.getAllProducts(req.query);
         res.status(200).json(products);
@@ -18,7 +20,7 @@ export default function makeProductController(productService) {
       }
     },
 
-    getOne: async (req, res, next) => {
+    getOne: async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
       try {
         const product = await productService.getProduct(req.params.id);
         res.status(200).json(product);
@@ -27,7 +29,7 @@ export default function makeProductController(productService) {
       }
     },
 
-    update: async (req, res, next) => {
+    update: async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
       try {
         const product = await productService.updateProduct(req.params.id, req.body);
         res.status(200).json(product);
@@ -36,13 +38,13 @@ export default function makeProductController(productService) {
       }
     },
 
-    remove: async (req, res, next) => {
+    remove: async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
       try {
         const result = await productService.deleteProduct(req.params.id);
         res.status(200).json(result);
       } catch (error) {
         next(error);
       }
-    }
+    },
   };
 }

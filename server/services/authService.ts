@@ -4,25 +4,25 @@ import config from '../config/index.js';
 import AppError from '../util/AppError.js';
 import { logger } from '../util/logger.js';
 
-export default function makeAuthService(userRepository) {
+export default function makeAuthService(userRepository: any) {
   return {
-    register: async (name, email, password) => {
+    register: async (name: string, email: string, password: string) => {
       logger.info(`Attempting to register user: ${email}`);
 
       const existingUser = await userRepository.findByEmail(email);
       if (existingUser) {
         logger.warn(`Registration failed: Email ${email} already exists`);
-        throw new AppError('User already exists', 409); // 409 Conflict
+        throw new AppError('User already exists', 409);
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await userRepository.create({ name, email, password: hashedPassword });
-      
+
       logger.info(`User registered successfully: ${user._id}`);
       return { id: user._id, email: user.email };
     },
 
-    login: async (email, password) => {
+    login: async (email: string, password: string) => {
       logger.info(`Login attempt for: ${email}`);
 
       const user = await userRepository.findByEmail(email);
@@ -38,9 +38,9 @@ export default function makeAuthService(userRepository) {
       }
 
       const token = jwt.sign({ id: user._id }, config.jwtSecret, { expiresIn: '1h' });
-      
+
       logger.info(`User logged in successfully: ${user._id}`);
       return { token, user: { id: user._id, name: user.name, email: user.email } };
-    }
+    },
   };
 }

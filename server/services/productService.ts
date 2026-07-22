@@ -1,23 +1,18 @@
 import AppError from '../util/AppError.js';
 import { logger } from '../util/logger.js';
 
-/**
- * @param {ProductRepository} productRepository
- */
-export default function makeProductService(productRepository) {
+export default function makeProductService(productRepository: any) {
   return {
-    createProduct: async (productData) => {
+    createProduct: async (productData: any) => {
       logger.info(`Creating new product: ${productData.name}`);
-      // Business Logic: You could check here if a similar product already exists
       return await productRepository.create(productData);
     },
 
-    getAllProducts: async (filters) => {
-      // Logic: You can add complex filtering logic here later
+    getAllProducts: async (filters: any) => {
       return await productRepository.findAll(filters);
     },
 
-    getProduct: async (id) => {
+    getProduct: async (id: string) => {
       const product = await productRepository.findById(id);
       if (!product) {
         throw new AppError('Product not found', 404);
@@ -25,7 +20,7 @@ export default function makeProductService(productRepository) {
       return product;
     },
 
-    updateProduct: async (id, updates) => {
+    updateProduct: async (id: string, updates: any) => {
       logger.info(`Updating product: ${id}`);
       const updatedProduct = await productRepository.updateById(id, updates);
       if (!updatedProduct) {
@@ -34,13 +29,13 @@ export default function makeProductService(productRepository) {
       return updatedProduct;
     },
 
-    deleteProduct: async (id) => {
+    deleteProduct: async (id: string) => {
       logger.warn(`Deleting product: ${id}`);
       const deleted = await productRepository.deleteById(id);
       if (!deleted) {
         throw new AppError('Product not found', 404);
       }
       return { message: 'Product deleted successfully' };
-    }
+    },
   };
 }

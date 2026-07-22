@@ -1,0 +1,4 @@
+/logs
+*.log
+dist
+package-lock.json
