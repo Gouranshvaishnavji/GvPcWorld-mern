@@ -1,0 +1,111 @@
+// this is schema template for an e commerce application and will add pc_builds, compatibility rule for each product , wishlist , user reviews , and inventory logs for stock and discounts and coupons like real applications.
+
+users
+------
+id
+name
+email
+password
+role
+
+addresses
+---------
+id
+user_id
+street
+city
+state
+pincode
+
+categories
+----------
+id
+name
+
+products
+--------
+id
+category_id
+name
+description
+price
+stock
+
+product_images
+--------------
+id
+product_id
+image_url
+
+carts
+-----
+id
+user_id
+
+cart_items
+----------
+id
+cart_id
+product_id
+quantity
+
+orders
+------
+id
+user_id
+address_id
+total
+status
+created_at
+
+order_items
+-----------
+id
+order_id
+product_id
+quantity
+price
+
+payments
+--------
+id
+order_id
+method
+status
+transaction_id
+
+shipments
+---------
+id
+order_id
+tracking_number
+status
+estimated_delivery
+
+Relationships
+User
+ │
+ ├──── Address
+ │
+ ├──── Cart
+ │        │
+ │        └──── Cart Items
+ │                 │
+ │              Product
+ │
+ └──── Orders
+           │
+           ├──── Order Items
+           │          │
+           │       Product
+           │
+           ├──── Payment
+           │
+           └──── Shipment
+
+Category
+    │
+ Products
+      │
+ Product Images
+
